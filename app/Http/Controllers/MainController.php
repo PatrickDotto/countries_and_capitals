@@ -28,7 +28,7 @@ class MainController extends Controller
         [
             'total_questions.required' => 'O número de questões é obrigatório',
             'total_questions.integer' => 'O número de questões tem que ser um valor inteiro',
-            'total_questions.min' => 'O número de questões tem que ser até :min questões',
+            'total_questions.min' => 'O número de questões tem que ser no mínimo :min questões',
             'total_questions.max' => 'O número de questões tem que ser até :max questões',
         ]
         
@@ -37,7 +37,15 @@ class MainController extends Controller
     
         $quiz = $this->prepareQuiz($total_questions);
 
-        dd($quiz);
+        session()->put([
+            'quiz' => $quiz,
+            'total_questions' => $total_questions,
+            'current_question' => 1,
+            'current_answers' => 0,
+            'wrong_answers' => 0
+        ]);
+
+        return redirect()->route('game');
     }
 
     private function prepareQuiz($total_questions)
@@ -61,12 +69,31 @@ class MainController extends Controller
             $other_capitals = array_diff($other_capitals, [$question['correct_answer']]);
 
             shuffle($other_capitals);
-            $question['wrong_anwsers'] = array_slice($other_capitals, 0, 3);
+            $question['wrong_answers'] = array_slice($other_capitals, 0, 3);
 
             $question['correct'] = null;
 
             $questions[] = $question;
         }
     return $questions;
+    }
+
+    public function game(): View
+    {
+        $quiz = session('quiz');
+        $total_questions = session('total_questions');
+        $current_question = session('current_question') - 1;
+
+        $answers = $quiz[$current_question]['wrong_answers'];
+        $answers[] = $quiz[$current_question]['correct_answer'];
+
+        shuffle($answers);
+
+        return view('game')->with([
+            'country' => $quiz[$current_question]['country'],
+            'totalQuestions' => $total_questions,
+            'currentQuestion' => $current_question,
+            'answers' => $answers
+        ]);
     }
 }

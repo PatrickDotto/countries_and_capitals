@@ -5,3 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'startGame'])->name('start_game');
 Route::post('/', [MainController::class, 'prepareGame'])->name('prepare_name');
+
+Route::get('/game', [MainController::class, 'game'])->name('game');
