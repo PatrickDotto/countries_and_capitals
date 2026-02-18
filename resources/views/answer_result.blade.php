@@ -14,7 +14,7 @@
         
     </div>
 
-    <!-- cancel game -->
+
     <div class="text-center mt-5">
         <a href="{{ route('next_question') }}" class="btn btn-primary mt-3 px-5">AVANÇAR</a>
     </div>
