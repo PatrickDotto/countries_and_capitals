@@ -6,21 +6,9 @@
 
         <div class="row">
 
-            <div class="col-6 text-center">
-                <p class="response-option">[CAPITAL 1]</p>
-            </div>
-
-            <div class="col-6 text-center">
-                <p class="response-option">[CAPITAL 2]</p>
-            </div>
-
-            <div class="col-6 text-center">
-                <p class="response-option">[CAPITAL 3]</p>
-            </div>
-
-            <div class="col-6 text-center">
-                <p class="response-option">[CAPITAL 4]</p>
-            </div>
+            @foreach ($answers as $answer)
+                <x-answer :capital="$answer"/>
+            @endforeach
 
         </div>
         
