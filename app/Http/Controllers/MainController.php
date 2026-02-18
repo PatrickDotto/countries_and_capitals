@@ -42,7 +42,7 @@ class MainController extends Controller
             'quiz' => $quiz,
             'total_questions' => $total_questions,
             'current_question' => 1,
-            'current_answers' => 0,
+            'correct_answers' => 0,
             'wrong_answers' => 0
         ]);
 
